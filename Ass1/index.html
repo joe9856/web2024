@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>work 1: แบบทดสอบ</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Charm:wght@400;700&family=Charmonman:wght@400;700&family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Sriracha&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Athiti", sans-serif;
+            font-weight: 200;
+            font-style: normal;
+            
+        }
+        .page{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            margin-top: 20%;    
+        }
+        #btnStart{
+            width: 60%;
+            border-radius: 20px;
+            font-size: 1.3rem;
+        }
+        #image{
+            min-height: 50px;
+        }
+        #image img{
+            max-width: 400px;
+        }
+        .quiz-option{
+            border-radius: 20px;
+            font-size: 1.2rem;
+            border: 1px solid #000;
+        }
+        input[type="radio"] {
+            width: 25px;         /* กำหนดความกว้าง */
+            height: 25px;        /* กำหนดความสูง */
+            -webkit-appearance: none; /* ปิดค่าลักษณะเริ่มต้น */
+            appearance: none;        /* ปิดค่าลักษณะเริ่มต้น */
+            border: 2px solid #007bff; /* กำหนดขอบ */
+            border-radius: 50%;       /* ให้เป็นวงกลม */
+            outline: none;            /* เอาขอบเส้นประออก */
+            cursor: pointer;          /* เปลี่ยนเคอร์เซอร์เป็น pointer */
+            margin-right: 50px;
+        }
+
+        /* ลักษณะเมื่อถูกเลือก */
+        input[type="radio"]:checked {
+            background-color: #007bff; /* พื้นหลังสีฟ้า */
+            border-color: #0056b3;    /* เปลี่ยนขอบ */
+        }
+
+        .Question_topic{
+            border: 1px solid #000;
+            background-color: azure;
+            border-radius: 20px;
+            width: 130px;
+            padding: 20px;
+        }
+        #btnCheckAnswer{
+            width: 30%;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 1.5rem;
+        }
+        .card{
+            padding: 10px;
+            border-radius: 20px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid p-3 bg-primary text-white text-center">
+      <h1>แบบทดสอบ วิชาสังคม</h1>
+    </div>
+    <div class="text-center" id="image">
+        <img src="image/32a1da970e70c746a449b5cccabaeff5.jpg" class="img-fluid" alt="...">
+    </div>
+    <div class="container p-5" id="page">
+      <div class="page p-5 m-3" id="startBox">
+        <button class="btn-primary btn p-4 d-flex justify-content-center align-items-center" id="btnStart">เริ่มทำแบบทดสอบ</button>
+      </div>
+      <div class="row " id="quizBox">
+        <div class="card" id="quizListBox"></div>
+        <button class="btn-primary btn" id="btnCheckAnswer">ตรวจคำตอบ</button>
+      </div>
+    </div>
+
+    <!-- Modal แสดงคะแนน -->
+    <div class="modal fade" id="scoreModal" tabindex="-1" aria-labelledby="scoreModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="scoreModalLabel">ผลคะแนนของคุณ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <h4 id="scoreMessage"></h4>
+            <p id="detailedResult"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(function () {
+        $("#quizBox").hide();
+        $("#btnStart").click(function () {
+          $("#image").hide();
+          $("#startBox").hide();
+          $("#quizBox").show();
+          displayQuizList();
+        });
+
+        $("#btnCheckAnswer").click(function () {
+          checkAnswers();
+        });
+      });
+
+      function displayQuizList() {
+        $.getJSON("quiz.json", function (data) {
+          $("#quizListBox").html("<div class='p-1 mt-4  text-center'><h1>ข้อสอบ</h1></div>");
+          for (var i in data) {
+            displayQuiz(i, data[i]);  // ส่งคำถามแต่ละข้อไปแสดง
+          }
+        });
+      }
+
+      function displayQuiz(i, q) {
+        var no = parseInt(i) + 1; // ลำดับคำถาม
+        $("#quizListBox").append(
+          "<div class='p-2 mt-5'><h3 class='Question_topic'>ข้อที่ " + no + "</h3>.<div><h2>" + q.title + "</h2></div>"
+        );
+
+        for (var c in q.options) {
+          var v = parseInt(c) + 1; // ลำดับตัวเลือก
+          $("#quizListBox").append(
+            "<div class='p-4 m-3  border-info quiz-option'>" +
+              "<input type='radio' name='q" +
+              no +
+              "' value='" +
+              v +
+              "'><b>" +
+              v +
+              ". " +
+              q.options[c] +
+              "</b></div>"
+          );
+        }
+      }
+
+    //   ตรวจคำตอบและแสดงผลใน Modal
+      function checkAnswers() {
+        var score = 0;
+        $("#resultBox").html("");
+        $.getJSON("quiz.json", function (data) {
+          for (var i in data) {
+            var no = parseInt(i) + 1;
+            var userAnswer = $("input[name='q" + no + "']:checked").val(); // คำตอบของผู้ใช้
+
+            if (userAnswer == data[i].answer) {
+              score++; // เพิ่มคะแนนถ้าตอบถูก
+            } 
+          }
+
+          var totalQuestions = data.length;
+          var scoreMessage = "คุณทำคะแนนได้ " + score + " จากทั้งหมด " + totalQuestions + " คะแนน";
+
+          // แสดงผลคะแนนใน Modal
+          $("#scoreMessage").text(scoreMessage);
+
+          // แสดงผลละเอียด ข้อความที่บอกว่าแต่ละคำถามผู้ใช้ตอบถูกหรือผิด
+          var detailedResult = "";
+          for (var i in data) {
+            var no = parseInt(i) + 1;
+            var userAnswer = $("input[name='q" + no + "']:checked").val();
+            var result = userAnswer == data[i].answer ? "ถูก" : "ผิด";
+            detailedResult += "<b>ข้อที่ " + no + ": ตอบ" + result + "</b><br>";
+          }
+          $("#detailedResult").html(detailedResult);
+
+          // เปิด Modal
+          var scoreModal = new bootstrap.Modal(document.getElementById("scoreModal"));
+          scoreModal.show();
+        });
+      }
+    </script>
+  </body>
+</html>
