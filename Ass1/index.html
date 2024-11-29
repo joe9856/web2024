@@ -21,7 +21,6 @@
             font-family: "Athiti", sans-serif;
             font-weight: 200;
             font-style: normal;
-            
         }
         .page{
             display: flex;
@@ -34,6 +33,9 @@
             width: 60%;
             border-radius: 20px;
             font-size: 1.3rem;
+            background-color: #3684D8;
+            color: white;
+            font-size: 2rem;
         }
         #image{
             min-height: 50px;
@@ -43,30 +45,28 @@
         }
         .quiz-option{
             border-radius: 20px;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             border: 1px solid #000;
         }
         input[type="radio"] {
-            width: 25px;         /* กำหนดความกว้าง */
-            height: 25px;        /* กำหนดความสูง */
-            -webkit-appearance: none; /* ปิดค่าลักษณะเริ่มต้น */
-            appearance: none;        /* ปิดค่าลักษณะเริ่มต้น */
-            border: 2px solid #007bff; /* กำหนดขอบ */
-            border-radius: 50%;       /* ให้เป็นวงกลม */
-            outline: none;            /* เอาขอบเส้นประออก */
-            cursor: pointer;          /* เปลี่ยนเคอร์เซอร์เป็น pointer */
+            width: 25px;         
+            height: 25px;       
+            -webkit-appearance: none; 
+            appearance: none;       
+            border: 2px solid #007bff; 
+            border-radius: 50%;      
+            outline: none;            
+            cursor: pointer;          
             margin-right: 50px;
         }
 
-        /* ลักษณะเมื่อถูกเลือก */
         input[type="radio"]:checked {
-            background-color: #007bff; /* พื้นหลังสีฟ้า */
-            border-color: #0056b3;    /* เปลี่ยนขอบ */
+            background-color: #007bff; 
+            border-color: #0056b3;    
         }
 
         .Question_topic{
-            border: 1px solid #000;
-            background-color: azure;
+            background-color: #D1DDEE;
             border-radius: 20px;
             width: 130px;
             padding: 20px;
@@ -82,21 +82,43 @@
             padding: 10px;
             border-radius: 20px;
         }
+        header h1 {
+          background-color: #223A59; 
+          color: white; 
+          padding: 20px; 
+          width: 30%; 
+          text-align: center; 
+          margin: 20px auto 120px; 
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); 
+        }
+        #d{
+          font-size: 1.4rem;
+        }
+        .modal-footer button{
+          padding: 10px 40px;
+          font-size: 1.4rem;
+        }
+        @media (max-width: 1023px) {
+            #page{
+              min-width:648px ;
+              min-height: 16304px;
+            }
+          }
     </style>
   </head>
   <body>
-    <div class="container-fluid p-3 bg-primary text-white text-center">
+    <header class="">
       <h1>แบบทดสอบ วิชาสังคม</h1>
-    </div>
+    </header>
     <div class="text-center" id="image">
         <img src="image/32a1da970e70c746a449b5cccabaeff5.jpg" class="img-fluid" alt="...">
-    </div>
+      </div>
     <div class="container p-5" id="page">
       <div class="page p-5 m-3" id="startBox">
-        <button class="btn-primary btn p-4 d-flex justify-content-center align-items-center" id="btnStart">เริ่มทำแบบทดสอบ</button>
+        <button class=" btn p-4 d-flex justify-content-center align-items-center" id="btnStart">เริ่มทำแบบทดสอบ</button>
       </div>
       <div class="row " id="quizBox">
-        <div class="card" id="quizListBox"></div>
+        <div class="card " id="quizListBox"></div>
         <button class="btn-primary btn" id="btnCheckAnswer">ตรวจคำตอบ</button>
       </div>
     </div>
@@ -106,7 +128,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="scoreModalLabel">ผลคะแนนของคุณ</h5>
+            <h5 class="modal-title" id="scoreModalLabel"><b>ผลคะแนนของคุณ</b></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body text-center">
@@ -114,7 +136,7 @@
             <p id="detailedResult"></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ปิด</button>
+            <button type="button" class="btn btn-primary " data-bs-dismiss="modal"><b>ปิด</b></button>
           </div>
         </div>
       </div>
@@ -137,7 +159,7 @@
 
       function displayQuizList() {
         $.getJSON("quiz.json", function (data) {
-          $("#quizListBox").html("<div class='p-1 mt-4  text-center'><h1>ข้อสอบ</h1></div>");
+          $("#quizListBox").html("<div class='p-1 mt-4 text-center'><h1>ข้อสอบ</h1></div>");
           for (var i in data) {
             displayQuiz(i, data[i]);  // ส่งคำถามแต่ละข้อไปแสดง
           }
@@ -147,13 +169,13 @@
       function displayQuiz(i, q) {
         var no = parseInt(i) + 1; // ลำดับคำถาม
         $("#quizListBox").append(
-          "<div class='p-2 mt-5'><h3 class='Question_topic'>ข้อที่ " + no + "</h3>.<div><h2>" + q.title + "</h2></div>"
+          "<div class='p-2 mt-5'><h3 class='Question_topic'>ข้อที่ " + no + "</h3>.<div><h2><b>" + q.title + "</b></h2></div>"
         );
 
         for (var c in q.options) {
           var v = parseInt(c) + 1; // ลำดับตัวเลือก
           $("#quizListBox").append(
-            "<div class='p-4 m-3  border-info quiz-option'>" +
+            "<div class='p-4 m-3 border-info quiz-option'>" +
               "<input type='radio' name='q" +
               no +
               "' value='" +
@@ -192,8 +214,11 @@
           for (var i in data) {
             var no = parseInt(i) + 1;
             var userAnswer = $("input[name='q" + no + "']:checked").val();
-            var result = userAnswer == data[i].answer ? "ถูก" : "ผิด";
-            detailedResult += "<b>ข้อที่ " + no + ": ตอบ" + result + "</b><br>";
+            var result = userAnswer == data[i].answer 
+              ? `ถูก <img src="image/checked.png" alt="ถูก" width="20">` 
+              : `ผิด <img src="image/cancel.png" alt="ผิด" width="20">`;
+
+            detailedResult += "<b id='d'>ข้อที่ " + no + ": ตอบ" + result + "</b><br>";
           }
           $("#detailedResult").html(detailedResult);
 
