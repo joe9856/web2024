@@ -19,12 +19,20 @@
     <div id="app">
         <v-app>
             <div class="pa-4 bg-primary">แบบทดสอบ</div>
-            <v-btn class="yellow darken-1 ma-2" @click="load_data('quiz1.json')">
+            <v-btn class="yellow darken-1 ma-2" v-show="show_Test" @click="load_data('quiz1.json')">
                 <v-icon>mdi-play-circle</v-icon> เริ่มทำแบบทดสอบ 1
             </v-btn>
-            <v-btn class="yellow darken-1 ma-2" @click="load_data('quiz2.json')">
+            <v-btn class="yellow darken-1 ma-2" v-show="show_Test" @click="load_data('quiz2.json')">
                 <v-icon>mdi-play-circle</v-icon> เริ่มทำแบบทดสอบ 2
             </v-btn>
+            <!-- <v-btn size="large">
+                Large Button
+              </v-btn>
+              
+              <v-btn size="x-large">
+                Extra Large Button
+              </v-btn> -->
+              
 
             <div v-if="page==2">
                 <div v-for="(q, i) in qlist" :key="i" class="my-1 pa-4 border-info">
@@ -41,15 +49,76 @@
                     <div v-else>กรุณาตอบให้ครบ</div>
                 </div>
             </div>
+
             <div v-if="page==3">
-                คุณได้คะแนน {{ score }}
+                
+                <v-sheet class="position-relative" min-height="450">
+                    <div
+                      class="position-absolute d-flex align-center justify-center w-100 h-100"
+                    >
+                      <v-btn
+                        color="deep-purple-darken-2"
+                        size="x-large"
+                        @click="dialog = !dialog"
+                      >
+                        Open Dialog
+                      </v-btn>
+                    </div>
+            
+                    <v-fade-transition hide-on-leave>
+                      <v-card
+                        v-if="dialog"
+                        append-icon="$close"
+                        class="mx-auto"
+                        elevation="16"
+                        max-width="500"
+                        title="Send a receipt"
+                      >
+                        <template v-slot:append>
+                          <v-btn
+                            icon="$close"
+                            variant="text"
+                            @click="dialog = false"
+                          ></v-btn>
+                        </template>
+            
+                        <v-divider></v-divider>
+            
+                        <div class="py-12 text-center">
+                          <v-icon
+                            class="mb-6"
+                            color="success"
+                            icon="mdi-check-circle-outline"
+                            size="128"
+                          ></v-icon>
+            
+                          <div class="text-h4 font-weight-bold">คุณได้คะแนน {{ score }}</div>
+                        </div>
+            
+                        <v-divider></v-divider>
+            
+                        <div class="pa-4 text-end">
+                          <v-btn
+                            class="text-none"
+                            color="medium-emphasis"
+                            min-width="92"
+                            variant="outlined"
+                            rounded
+                            @click="dialog = false"
+                          >
+                            Close
+                          </v-btn>
+                        </div>
+                      </v-card>
+                    </v-fade-transition>
+                  </v-sheet>
             </div>
         </v-app>
     </div>
 
     <script>
         
-        const { createApp } = Vue;
+        const { createApp, ref  } = Vue;
         const { createVuetify } = Vuetify;
 
         const vuetify = createVuetify();
@@ -61,14 +130,21 @@
                     answers: [],
                     score: 0,
                     page: 1,
+                    show_Test: true,
                 };
             },
+            setup() {
+                const dialog = ref(false);
+                return { dialog };
+            },
             mounted() {
-                this.load_data(); // กำหนดไฟล์เริ่มต้น
+                // กำหนดไฟล์เริ่มต้น
+                // this.load_data(); 
             },
             methods: {
                 async load_data(file) {
                     try {
+                        this.show_Test = false;
                         const res = await fetch(file);
                         this.qlist = await res.json();
                         this.answers = new Array(this.qlist.length).fill(null); // เคลียร์คำตอบเก่า
