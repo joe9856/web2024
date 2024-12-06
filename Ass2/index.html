@@ -1,186 +1,355 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.7.4/dist/vuetify.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@3.7.4/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/vuetify@3.7.4/dist/vuetify.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Charm:wght@400;700&family=Charmonman:wght@400;700&family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Sriracha&display=swap" rel="stylesheet">
     <title>My first Vue page</title>
     <style>
-        #app {
-            /* display: inline-block;
-            padding: 10px; */
-            font-size: x-large;
-            background-color: lightgreen;
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-size:1em;
+        font-family: "Sriracha", serif;
+      }
+      #app {
+        
+        font-size: x-large;
+        background-color: lightgreen;
+      }
+      .text-title{
+        font-size: 1.2rem;
+        font-weight: lighter;
+        margin: 5px 0;
+      }
+      .gradient-box {
+          background: linear-gradient(45deg, #FF5722, #2196F3);  /* ไล่สีจากส้มไปฟ้า */
+          color: white;
+          padding: 20px;
+        }
+        .gradient-box1 {
+          background: linear-gradient(45deg, #2196F3,#FF5722);  /* ไล่สีจากส้มไปฟ้า */
+          color: white;
+          padding: 20px;
+        }
+        .bb b{
+          font-size: 1.5rem;
+        }
+        .btn{
+          font-size: 1.6rem;
+          background: linear-gradient(45deg, #FF5722, #f1a42f);
+          color: white;
+        }
+        .title-shadow {
+          text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* กำหนดเงาสีดำที่เบลอ */
+        }
+        .btn_look{
+          background: linear-gradient(45deg, #ec3496, #f1a42f);
+          color: white;
+          font-size: 1.5rem;
+        }
+        .page_3{
+          background: linear-gradient(45deg, #ffd5eb, #ffe4bb);
+        }
+        .btn_close{
+          background: linear-gradient(45deg,#f1a42f, #ec3496);
+          color: white;
         }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app">
-        <v-app>
-            <div class="pa-4 bg-primary">แบบทดสอบ</div>
-            <v-btn class="yellow darken-1 ma-2" v-show="show_Test" @click="load_data('quiz1.json')">
-                <v-icon>mdi-play-circle</v-icon> เริ่มทำแบบทดสอบ 1
-            </v-btn>
-            <v-btn class="yellow darken-1 ma-2" v-show="show_Test" @click="load_data('quiz2.json')">
-                <v-icon>mdi-play-circle</v-icon> เริ่มทำแบบทดสอบ 2
-            </v-btn>
-            <!-- <v-btn size="large">
-                Large Button
-              </v-btn>
-              
-              <v-btn size="x-large">
-                Extra Large Button
-              </v-btn> -->
-              
-
-            <div v-if="page==2">
-                <div v-for="(q, i) in qlist" :key="i" class="my-1 pa-4 border-info">
-                    ข้อที่ {{ i+1 }} <br>
-                    <div v-html="q.title" class="pa-2"></div>
-                    <v-radio-group v-model="answers[i]">
-                        <v-radio v-for="(otxt, ov) in q.options" :key="ov" :label="otxt" :value="ov+1" />
-                    </v-radio-group>
-                </div>
-                <div class="position-sticky bottom-0 pa-4 bg-primary">
-                    <v-btn v-if="validate()" @click="grading()">
-                        <v-icon>mdi-check</v-icon> ตรวจคำตอบ
-                    </v-btn>
-                    <div v-else>กรุณาตอบให้ครบ</div>
-                </div>
-            </div>
-
-            <div v-if="page==3">
-                
-                <v-sheet class="position-relative" min-height="450">
-                    <div
-                      class="position-absolute d-flex align-center justify-center w-100 h-100"
-                    >
-                      <v-btn
-                        color="deep-purple-darken-2"
-                        size="x-large"
-                        @click="dialog = !dialog"
-                      >
-                        Open Dialog
-                      </v-btn>
-                    </div>
-            
-                    <v-fade-transition hide-on-leave>
-                      <v-card
-                        v-if="dialog"
-                        append-icon="$close"
-                        class="mx-auto"
-                        elevation="16"
-                        max-width="500"
-                        title="Send a receipt"
-                      >
+      <v-app class="d-flex justify-center align-center">
+        <div class="pa-6  bg-primary d-flex justify-space-between gradient-box">
+         <h1>แบบทดสอบ</h1>
+          <v-btn color="primary mr-16 pa-6 d-flex align-center" >
+            <b>คลังข้อสอบ</b>
+            <v-menu activator="parent">
+              <v-list>
+                <v-list-item v-for="i in 5" :key="i" link>
+                  <v-list-item-title>Item {{ i }}</v-list-item-title>
+                  <template v-slot:append>
+                    <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
+                  </template>
+      
+                  <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
+                    <v-list>
+                      <v-list-item v-for="j in 5" :key="j" link>
+                        <v-list-item-title>Item {{ i }} - {{ j }}</v-list-item-title>
                         <template v-slot:append>
-                          <v-btn
-                            icon="$close"
-                            variant="text"
-                            @click="dialog = false"
-                          ></v-btn>
+                          <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
                         </template>
-            
-                        <v-divider></v-divider>
-            
-                        <div class="py-12 text-center">
-                          <v-icon
-                            class="mb-6"
-                            color="success"
-                            icon="mdi-check-circle-outline"
-                            size="128"
-                          ></v-icon>
-            
-                          <div class="text-h4 font-weight-bold">คุณได้คะแนน {{ score }}</div>
-                        </div>
-            
-                        <v-divider></v-divider>
-            
-                        <div class="pa-4 text-end">
-                          <v-btn
-                            class="text-none"
-                            color="medium-emphasis"
-                            min-width="92"
-                            variant="outlined"
-                            rounded
-                            @click="dialog = false"
-                          >
-                            Close
-                          </v-btn>
-                        </div>
-                      </v-card>
-                    </v-fade-transition>
-                  </v-sheet>
+      
+                        <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
+                          <v-list>
+                            <v-list-item v-for="k in 5" :key="k" link>
+                              <v-list-item-title>Item {{ i }} - {{ j }} - {{ k }}</v-list-item-title>
+                            </v-list-item>
+                          </v-list>
+                        </v-menu>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-btn>
+        </div>
+        
+
+        <v-container class="mt-5" v-show="show_Test">
+          <v-row dense>
+            <v-col cols="5.9" class="bordered elevation-5 mr-16 d-flex justify-center align-center"
+            :style="{borderRadius: '15px' }" >
+              <v-container>
+                <v-img
+                class="align-end text-white":style="{borderRadius: '15px' }"
+                height="400"
+                width="500"
+                src="image/76e6421950dcdf3453383cca53b47d98.jpg"
+                cover
+              >
+                <v-card-title class="title-shadow">ทดสอบความรู้ฟิสิกส์ พื้นฐานและการแข่งขัน</v-card-title>
+              </v-img>
+
+              <v-card-title>
+                <div class="bb"><b>ฟิสิกส์พื้นฐาน</b></div>
+              </v-card-title>
+              <v-card-text>
+                <div><b>คำอธิบาย:</b> ข้อสอบฟิสิกส์พื้นฐานเพื่อทดสอบความเข้าใจในหลักการฟิสิกส์ทั่วไป เช่น กฎการเคลื่อนที่, พลังงาน, แรง, และคลื่นเสียง</div>
+              </v-card-text>
+              <v-card-text>
+                <div><b>คำแนะนำ:</b> เหมาะสำหรับนักเรียนที่ต้องการฝึกฝนความรู้พื้นฐานฟิสิกส์และทดสอบการเรียนรู้ในระดับเริ่มต้น</div>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn
+                  class="btn pa-5 d-flex":style="{borderRadius: '15px' }"
+                  v-show="show_Test"
+                  @click="load_data('quiz1.json')"
+                  
+                  text="เริ่มทำแบบทดสอบ"
+                ></v-btn>
+              </v-card-actions>
+              </v-container>
+              
+            </v-col>
+
+            <v-col cols="5.9" class="bordered elevation-5 d-flex justify-center align-center"
+            :style="{borderRadius: '15px' }">
+              <v-container>
+                <v-img
+                class="align-end text-white":style="{borderRadius: '15px' }"
+                height="400"
+                width="500"
+                src="image/b1b934291929b45865daefd555f2eacc.jpg"
+                cover
+              >
+                <v-card-title class="title-shadow">ฟิสิกส์โอลิมปิก ท้าทายความรู้สู่ระดับโลก</v-card-title>
+              </v-img>
+
+              <v-card-title>
+                <div class="bb"><b>ฟิสิกส์โอลิมปิก</b></div>
+              </v-card-title>
+
+              <v-card-text>
+                <div></div><b>คำอธิบาย:</b> ข้อสอบฟิสิกส์โอลิมปิกที่ทดสอบความรู้ในระดับสูง ด้วยคำถามที่ท้าทายและใช้ทฤษฎีฟิสิกส์ล้ำลึก
+              </v-card-text>
+              <v-card-text>
+                <div><b>คำแนะนำ:</b> เหมาะสำหรับผู้ที่ต้องการทดสอบความสามารถในระดับโอลิมปิกและเตรียมตัวสำหรับการแข่งระดับโลก</div>
+              </v-card-text>
+
+              <v-card-actions class="mx-auto" v-show="show_Test">
+                <v-btn
+                  class="btn pa-5 d-flex":style="{borderRadius: '15px' }"
+                  v-show="show_Test"
+                  @click="load_data('quiz2.json')"
+                  
+                  text="เริ่มทำแบบทดสอบ"
+                ></v-btn>
+              </v-card-actions>
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <div v-if="page==2" >
+          <div v-for="(q, i) in qlist" :key="i"  
+          class="box border-info mx-auto mb-10 mt-10 pa-10 bordered elevation-5" 
+          :style="{ width: '800px', borderRadius: '15px' }">
+            <h3>ข้อที่ {{ i+1 }}</h3> 
+            <div v-html="q.title" class="pa-2 text-title"></div>
+            <v-radio-group v-model="answers[i]">
+              <v-radio
+                v-for="(otxt, ov) in q.options"
+                :key="ov"
+                :label="otxt"
+                :value="ov+1"
+              />
+            </v-radio-group>
+          </div>
+          <div class="position-sticky bottom-0 pa-4 bg-primary gradient-box1">
+            <v-btn v-if="validate()" @click="grading()" class="d-flex pa-6">
+              <v-icon>mdi-check</v-icon> ตรวจคำตอบ
+              <v-img
+                height="40"
+                width="50"
+                src="image/smile.png" 
+              > 
+            </v-btn>
+            <div v-else class="d-flex justify-start align-center">
+              กรุณาตอบให้ครบ 
+              <v-icon color="error" icon="mdi-alert" size="x" class="ml-3"></v-icon>
             </div>
-        </v-app>
+          </div>
+        </div>
+
+        <div v-if="page==3">
+          <v-sheet class="position-relative ma-10 " min-height="450">
+            <div
+              class="position-absolute d-flex align-center justify-center w-100 h-100 "
+            >
+              <v-btn
+                class="btn_look"
+                size="x-large"
+                @click="dialog = !dialog"
+                class="pa-10 d-flex"
+              >
+                ดูผลคะแนนสอบ
+              </v-btn>
+            </div>
+
+            <v-fade-transition hide-on-leave class="page_3">
+              
+              <v-card
+                v-if="dialog"
+                append-icon="$close"
+                class="mx-auto"
+                elevation="16"
+                max-width="800"
+                title="คะแนน"
+                
+              >
+                <template v-slot:append>
+                  <v-btn
+                    icon="$close"
+                    variant="text"
+                    @click="dialog = false"
+                  ></v-btn>
+                </template>
+
+                <v-divider></v-divider>
+
+                <div class="py-12 text-center d-flex justify-center align-center">
+                  <v-img
+                    class=" "
+                    size="128"
+                    height="400"
+                    width="400"
+                    src="image/69308e5483ae78e5b6424c5ad49ab0d5.jpg"
+                  >
+                  <div class="text-h4 font-weight-bold ">
+                    <div>คุณได้คะแนน {{ score }}</div> 
+                  </div>
+                </div>
+
+                <v-divider></v-divider>
+
+                <div class="pa-4 text-end ">
+                  <v-btn
+                    class="text-none btn_close"
+                    
+                    min-width="92"
+                    variant="outlined"
+                    rounded
+                    @click="dialog = false"
+                  >
+                    Close
+                  </v-btn>
+                </div>
+              </v-card>
+            </v-fade-transition>
+          </v-sheet>
+        </div>
+      </v-app>
     </div>
 
     <script>
-        
-        const { createApp, ref  } = Vue;
-        const { createVuetify } = Vuetify;
+      const { createApp, ref } = Vue;
+      const { createVuetify } = Vuetify;
 
-        const vuetify = createVuetify();
-        const app = createApp({
-            data() {
-                return {
-                    message: "Hello",
-                    qlist: [],
-                    answers: [],
-                    score: 0,
-                    page: 1,
-                    show_Test: true,
-                };
-            },
-            setup() {
-                const dialog = ref(false);
-                return { dialog };
-            },
-            mounted() {
-                // กำหนดไฟล์เริ่มต้น
-                // this.load_data(); 
-            },
-            methods: {
-                async load_data(file) {
-                    try {
-                        this.show_Test = false;
-                        const res = await fetch(file);
-                        this.qlist = await res.json();
-                        this.answers = new Array(this.qlist.length).fill(null); // เคลียร์คำตอบเก่า
-                        this.page = 2; // ไปยังหน้าทำแบบทดสอบ
-                    } catch (error) {
-                        console.error("Error loading quiz data:", error);
-                    }
-                },
+      const vuetify = createVuetify();
+      const app = createApp({
+        data() {
+          return {
+            message: "Hello",
+            qlist: [],
+            answers: [],
+            score: 0,
+            page: 1,
+            show_Test: true,
+          };
+        },
+        setup() {
+          const dialog = ref(false);
+          return { dialog };
+        },
+        mounted() {
+          // กำหนดไฟล์เริ่มต้น
+          // this.load_data();
+        },
+        methods: {
+          async load_data(file) {
+            try {
+              this.show_Test = false;
+              const res = await fetch(file);
+              this.qlist = await res.json();
+              this.answers = new Array(this.qlist.length).fill(null); // เคลียร์คำตอบเก่า
+              this.page = 2; // ไปยังหน้าทำแบบทดสอบ
+            } catch (error) {
+              console.error("Error loading quiz data:", error);
+            }
+          },
 
-                validate() {//ฟังก์ชันนี้ตรวจสอบว่าผู้ใช้ตอบคำถามครบทุกข้อหรือยัง
-                    return this.qlist.every((q, i) => !!this.answers[i]);
-                    /*
+          validate() {
+            //ฟังก์ชันนี้ตรวจสอบว่าผู้ใช้ตอบคำถามครบทุกข้อหรือยัง
+            return this.qlist.every((q, i) => !!this.answers[i]);
+            /*
                     every(callback): ตรวจสอบว่าเงื่อนไขใน callback เป็นจริง (true) สำหรับทุกค่าภายในอาร์เรย์
                     !!this.answers[i]: แปลงค่าที่ผู้ใช้เลือก (this.answers[i]) เป็น Boolean
                     */
-                },
+          },
 
-                // ฟังก์ชันนี้คำนวณคะแนนของผู้ใช้โดยเปรียบเทียบคำตอบที่ให้ (answers) กับคำตอบที่ถูกต้อง (qlist.answer) และสรุปคะแนนรวม
-                grading() {
-                    this.score = this.qlist.reduce(
-                        (n, q, i) => n + (this.answers[i] == q.answer ? 1 : 0),
-                        0
-                    );
-                    this.page = 3;
-                },
-                /*
+          // ฟังก์ชันนี้คำนวณคะแนนของผู้ใช้โดยเปรียบเทียบคำตอบที่ให้ (answers) กับคำตอบที่ถูกต้อง (qlist.answer) และสรุปคะแนนรวม
+          grading() {
+            this.score = this.qlist.reduce(
+              (n, q, i) => n + (this.answers[i] == q.answer ? 1 : 0),
+              0
+            );
+            this.page = 3;
+          },
+          /*
                 reduce() ในการวนลูปเพื่อนับคะแนนรวม   n: คะแนนสะสม  q: คำถามแต่ละข้อใน qlist  i: ดัชนีของคำถาม  initialValue: เริ่มต้นด้วยคะแนน 0
                 this.answers[i] == q.answer ? 1 : 0:
                 ตรวจสอบว่าคำตอบที่ผู้ใช้เลือก (this.answers[i]) ตรงกับคำตอบที่ถูกต้อง (q.answer) หรือไม่ หากตรงกัน จะคืนค่า 1 (เพิ่ม 1 คะแนน)
                 หากไม่ตรง จะคืนค่า 0
 
                 */
-            },
-        });
+        },
+      });
 
-        app.use(vuetify).mount('#app');
+      app.use(vuetify).mount("#app");
     </script>
-</body>
+  </body>
 </html>
