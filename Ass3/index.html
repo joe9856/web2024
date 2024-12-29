@@ -18,24 +18,27 @@
       src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
       crossorigin
     ></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Charm:wght@400;700&family=Charmonman:wght@400;700&family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Sriracha&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Charm:wght@400;700&family=Charmonman:wght@400;700&family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Sriracha&display=swap"
+      rel="stylesheet"
+    />
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-      }body{
+      }
+      body {
         /* background-color: #e7e4d6; */
-        background-color: #CFBEDC;
-        font-size:1em;
+        background-color: #cfbedc;
+        font-size: 1em;
         font-family: "Sriracha", serif;
       }
       #myapp {
         height: auto;
         text-align: center;
-        
       }
       .quiz-container {
         max-width: 650px;
@@ -44,7 +47,7 @@
         background-color: #e7e4d6;
         color: #50514c;
       }
-      .quiz-container h2{
+      .quiz-container h2 {
         padding: 20px;
       }
       .quiz-image {
@@ -55,30 +58,94 @@
         border-radius: 10px;
       }
       .card-header {
-      text-align: center;
-      padding: 20px;
-    }
+        text-align: center;
+        padding: 20px;
+      }
       .card_page2 {
         padding: 20px;
         border: 1px solid #000;
         background-color: aliceblue;
         font-size: 1.3rem;
       }
-      .btn_start{
+      .btn_start {
         padding: 20px;
-        background-color: #F9713A;
-        border: 1px solid #F9713A;
+        background-color: #f9713a;
+        border: 1px solid #f9713a;
         font-size: 1.2rem;
         font-weight: bold;
         color: azure;
       }
-      .text_detail{
-        padding: 10px 0 8px 10px;
-        
+      .btn_start:hover {
+        background-color: #ed28ff;
+        border: 1px solid #f93ad6;
+        color: azure;
       }
-      .text_chose{
+
+      .text_detail {
+        padding: 10px 0 8px 10px;
+      }
+      .text_chose {
         margin-bottom: 50px;
       }
+
+      .btn_check {
+        background-color: #f9713a;
+        color: white;
+        border: 1px solid #c57373;
+        padding: 10px;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .btn_check:hover {
+        background-color: #fd306e;
+        color: white;
+        border: 1px solid #fd309a;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        -webkit-appearance: none;
+        appearance: none;
+        border: 2px solid #e218ce;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      input[type="radio"]:checked {
+        background-color: #ffa4df;
+        border: 3px solid #ff00b3;
+      }
+      .box_answer {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        min-width: 500px;
+      }
+      .modal-body {
+        min-width: 500px;
+      }
+
+      .btn_restart {
+        background-color: #f9713a;
+        color: white;
+        border: 1px solid #c57373;
+        padding: 20px 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .btn_restart:hover {
+        background-color: #fd306e;
+        color: white;
+        border: 1px solid #fd309a;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
     </style>
   </head>
   <body>
@@ -195,15 +262,15 @@
                   />
                 </div>
                 <div className="card-body">
-                  <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    // padding:"20px",
-                  }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <Button
-                    className="btn_start"
-                      // variant="Pink"
+                      className="btn_start"
                       onClick={() => this.setState({ status: 1 })}
                     >
                       เริ่มทำแบบทดสอบ
@@ -226,6 +293,7 @@
             for (let page = 1; page <= totalPages; page++) {
               paginationItems.push(
                 <Pagination.Item
+                  className="Pagination_Item"
                   key={page}
                   active={page === currentPage}
                   onClick={() => this.changePage(page)}
@@ -243,47 +311,69 @@
                   ))}
                   <div className="mt-3">
                     {this.state.valid ? (
-                      <Button onClick={this.checkAnswer}>ตรวจคำตอบ</Button>
+                      <Button className="btn_check" onClick={this.checkAnswer}>
+                        ตรวจคำตอบได้เลย
+                      </Button>
                     ) : (
                       <span style={{ color: "red" }}>
-                        กรุณาตอบคำถามให้ครบทุกข้อ
+                        ****** กรุณาตอบคำถามให้ครบทุกข้อ ******
                       </span>
                     )}
                   </div>
                 </div>
-                <Pagination className="mt-4 d-flex justify-content-center">
-                  {paginationItems}
-                </Pagination>
+                <div className="">
+                  <Pagination className="mt-4 d-flex justify-content-center " >
+                    {paginationItems}
+                  </Pagination>
+                </div>
               </>
             );
           } else if (status === 2) {
-      content = (
-        <>
-          <Modal
-            show={showModal} // แสดง modal
-            fullscreen={fullscreen} // เปิดในโหมดเต็มจอ
-            onHide={this.handleClose} // เมื่อกดปิด modal
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>ผลลัพธ์ของคุณ</Modal.Title>
-            </Modal.Header>
-            <Modal.Body style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              {/* เพิ่มรูปภาพและแสดงผลลัพธ์ตรงกลาง */}
-              <div>
-                <h3>ผลลัพธ์ของคุณ: {score}</h3>
-                <Image
-                  src="image/ccee6e88a3e5845615af01d4f5adb6a2.jpg" // ใส่ลิงก์หรือ path รูปภาพที่ต้องการ
-                  style={{ maxWidth: "100%", maxHeight: "300px", objectFit: "cover", borderRadius: "10px", marginBottom: "20px" }}
-                />
-                <Button onClick={() => this.setState({ status: 0 })}>
-                  ทำแบบทดสอบใหม่
-                </Button>
-              </div>
-            </Modal.Body>
-          </Modal>
-        </>
-      );
-    }
+            content = (
+              <>
+                <Modal
+                  show={showModal} // แสดง modal
+                  fullscreen={fullscreen} // เปิดในโหมดเต็มจอ
+                  onHide={this.handleClose} // เมื่อกดปิด modal
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>ผลลัพธ์ของคุณ</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* เพิ่มรูปภาพและแสดงผลลัพธ์ตรงกลาง */}
+                    <div className="box_answer">
+                      <h3>
+                        ผลลัพธ์ของคุณ: {score} / {this.state.qlist.length} ข้อ
+                      </h3>
+                      <Image
+                        className="image_answer"
+                        src="image/69308e5483ae78e5b6424c5ad49ab0d5.jpg"
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "300px",
+                          objectFit: "cover",
+                          borderRadius: "10px",
+                          marginBottom: "20px",
+                        }}
+                      />
+                      <Button
+                        className="btn_restart"
+                        onClick={() => this.setState({ status: 0 })}
+                      >
+                        ทำแบบทดสอบใหม่
+                      </Button>
+                    </div>
+                  </Modal.Body>
+                </Modal>
+              </>
+            );
+          }
 
           return <div>{content}</div>;
         }
@@ -301,7 +391,10 @@
         return (
           <div>
             <h4>
-              <div className="head_exam"><b>ข้อที่ {i + 1}.</b></div>  <div className="text_detail">{q.title}</div>
+              <div className="head_exam">
+                <b>ข้อที่ {i + 1}.</b>
+              </div>{" "}
+              <div className="text_detail">{q.title}</div>
             </h4>
             <div className="text_chose">
               {q.options.map((option, index) => (
