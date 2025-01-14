@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.2/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+
+      <a-entity gltf-model="Sorbe.glb" animation-mixer="clip:*" scale="0.5 0.5 0.5" position="-80 1 10"></a-entity>
+      <a-entity gltf-model="Panda.glb" animation-mixer="clip:*" scale="18 18 18" position="200 -100 100" rotation="0 250 0"></a-entity>
+      <a-entity  text = "ค่า: สวัสดีโลก;" > JOEJOEOJEOEJOEJEO  </a-entity>
+      <a-entity text="text: Hello World; font: ../fonts/DejaVu-sdf.fnt; fontImage: ../fonts/DejaVu-sdf.png">JOEJOEOJEOEJOEJEO</a-entity>
+      <a-text value="Natchapon Suwanampai\n663380156-2" position="0 0.3 -5" color="#FFFFFF" width="7" align="center"></a-text>
+    
+      <a-image src="image/joe.jpg" position="0 2 -5" width="4" height="4"></a-image>
+      <a-entity 
+      gltf-model="StorageUnit.glb" 
+      position="0 11 -15" 
+      scale="0.5 0.5 0.5" 
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 2000">
+      </a-entity>
+      
+
+      <a-sky color="#FFFFFF" src="image/shot-panoramic-composition-living-room.jpg"></a-sky>
+    </a-scene>
+  </body>
+</html>
