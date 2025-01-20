@@ -19,6 +19,28 @@
       scale="0.5 0.5 0.5" 
       animation="property: rotation; to: 0 360 0; loop: true; dur: 2000">
       </a-entity>
+
+       <!-- กล้อง -->
+       <a-camera position="0 1.6 0"></a-camera>
+
+       <!-- โมเดลที่หมุนรอบๆ -->
+       <a-entity 
+       gltf-model="StorageUnit.glb" 
+       scale="0.5 0.5 0.5" 
+       position="2 2 -5" 
+       animation="property: position; 
+                  dur: 4000; 
+                  loop: true; 
+                  easing: linear; 
+                  from: 0 2 -20; 
+                  to: -20 2 -5; 
+                  dir: alternate; 
+                  delay: 0"
+       animation__rotation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 4000">
+     </a-entity>
       
 
       <a-sky color="#FFFFFF" src="image/shot-panoramic-composition-living-room.jpg"></a-sky>
