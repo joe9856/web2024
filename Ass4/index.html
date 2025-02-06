@@ -21,7 +21,7 @@
       </a-entity>
 
        <!-- กล้อง -->
-       <a-camera position="0 1.6 0"></a-camera>
+       <a-camera position="0 2 0"></a-camera>
 
        <!-- โมเดลที่หมุนรอบๆ -->
        <a-entity 
@@ -43,7 +43,13 @@
      </a-entity>
       
 
-      <a-sky color="#FFFFFF" src="image/shot-panoramic-composition-living-room.jpg"></a-sky>
+     <a-assets>
+      <a-asset-item id="model-id" src="suburban-house/source/home_unreal.glb"></a-asset-item>
+    </a-assets>
+  
+    <a-entity gltf-model="#model-id" position="0 0 -5" scale="1 1 1"></a-entity>
+  
+      <!-- <a-sky color="#FFFFFF" src="image/shot-panoramic-composition-living-room.jpg"></a-sky> -->
     </a-scene>
   </body>
 </html>
